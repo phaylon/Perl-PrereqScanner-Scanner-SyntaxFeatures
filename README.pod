@@ -1,0 +1,67 @@
+=pod
+
+=encoding utf-8
+
+=head1 NAME
+
+Perl::PrereqScanner::Scanner::SyntaxFeatures
+
+=head1 VERSION
+
+version 0.001000
+
+=head1 SYNOPSIS
+
+    my $scanner = Perl::PrereqScanner->new(
+        extra_scanners => [qw( SyntaxFeatures )],
+    );
+
+=head1 DESCRIPTION
+
+This is a scanner plugin for L<Perl::PrereqScanner>. It will try to detect
+required L<syntax> extensions from their usage in Perl code.
+
+=head1 IMPLEMENTS
+
+=over
+
+=item * L<Perl::PrereqScanner::Scanner>
+
+=back
+
+=head1 METHODS
+
+=head2 scan_for_prereqs
+
+    $scanner->scan_for_prereqs($ppi_document, $requirements);
+
+Required by L<Perl::PrereqScanner::Scanner>. Scans the passed L<PPI>
+document and adds the detected extensions to the L<Version::Requirements>
+object passed as second argument.
+
+=head1 SEE ALSO
+
+=over
+
+=item * L<Perl::PrereqScanner>
+
+=item * L<syntax>
+
+=back
+
+=head1 BUGS
+
+Please report any bugs or feature requests to bug-perl-prereqscanner-scanner-syntaxfeatures@rt.cpan.org or through the web interface at:
+ http://rt.cpan.org/Public/Dist/Display.html?Name=Perl-PrereqScanner-Scanner-SyntaxFeatures
+
+=head1 AUTHOR
+
+Robert 'phaylon' Sedlacek <rs@474.at>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Robert 'phaylon' Sedlacek.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
