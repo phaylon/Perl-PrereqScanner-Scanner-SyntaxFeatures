@@ -4,7 +4,7 @@ use strictures 1;
 
 package Perl::PrereqScanner::Scanner::SyntaxFeatures;
 use Moose;
-use Data::Dump qw( pp );
+use Try::Tiny;
 
 use syntax qw( simple/v2 );
 use namespace::clean;
@@ -31,13 +31,19 @@ method scan_for_prereqs ($ppi, $req) {
     });
     for my $node (@$found) {
         for my $child ($node->children) {
-            if ($child->isa('PPI::Token::QuoteLike::Words')) {
-                $req->add_minimum($_->$inflate, 0)
-                    for $child->literal;
+            try {
+                if ($child->isa('PPI::Token::QuoteLike::Words')) {
+                    $req->add_minimum($_->$inflate, 0)
+                        for $child->literal;
+                }
+                elsif ($child->isa('PPI::Token::Quote::Single')) {
+                    $req->add_minimum($child->literal->$inflate, 0);
+                }
             }
-            elsif ($child->isa('PPI::Token::Quote::Single')) {
-                $req->add_minimum($child->literal->$inflate, 0);
-            }
+            catch {
+                warn sprintf "[%s] %s\n", __PACKAGE__, $_
+                    if $ENV{SYNTAX_DEBUG_PREREQSCAN};
+            };
         }
     }
 }
