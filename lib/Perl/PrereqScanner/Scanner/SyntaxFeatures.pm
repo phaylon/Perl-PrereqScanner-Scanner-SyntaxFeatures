@@ -28,7 +28,7 @@ method scan_for_prereqs ($ppi, $req) {
         return unless $module->isa('PPI::Token::Word');
         return unless $module->literal eq 'syntax';
         return 1;
-    });
+    }) or return;
     for my $node (@$found) {
         for my $child ($node->children) {
             try {
